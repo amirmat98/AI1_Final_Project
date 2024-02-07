@@ -104,7 +104,7 @@ def display_agent_policy_on_grid(q_values, axis):
 
 
 # Function to update visualization plots after training episodes
-def refreshVisualization(episode_number, agent, axis_qvalues, axis_policy, axis_path, axis_steps, axis_rewards, axis_cumulative_rewards, environment, path_of_episode):
+def refresh_visualization(episode_number, agent, axis_qvalues, axis_policy, axis_path, axis_steps, axis_rewards, axis_cumulative_rewards, environment, path_of_episode):
     global rewards, steps_episode  # Referencing global variables
     final_episode = agent.rewards - 1  # Check if it's the last episode
     if episode_number == final_episode:  # Update plots only after the last training episode
@@ -115,19 +115,19 @@ def refreshVisualization(episode_number, agent, axis_qvalues, axis_policy, axis_
         axis_path.set_title(r'$\bf{Path\ Taken\ by\ Agent}$', fontsize=14)
 
         # Plot the number of steps per episode
-        axis_steps.plot(range(episode_number + 1), episodes_steps, color='blue')
+        axis_steps.plot(range(episode_number + 1), steps_episode, color='blue')
         axis_steps.set_xlabel('Episode')
         axis_steps.set_ylabel('Steps')
         axis_steps.set_title(r'$\bf{Episode\ vs.\ Steps}$', fontsize=14)
 
         # Plot the rewards obtained per episode
-        axis_rewards.plot(range(episode_number + 1), total_rewards, color='magenta')
+        axis_rewards.plot(range(episode_number + 1), rewards, color='magenta')
         axis_rewards.set_xlabel('Episode')
         axis_rewards.set_ylabel('Reward')
         axis_rewards.set_title(r'$\bf{Episode\ vs.\ Rewards}$', fontsize=14)
 
         # Plot the accumulated rewards over all episodes
-        accumulated_rewards = np.cumsum(total_rewards)
+        accumulated_rewards = np.cumsum(rewards)
         axis_cumulative_rewards.plot(range(episode_number + 1), accumulated_rewards, color='green')
         axis_cumulative_rewards.set_xlabel('Episode')
         axis_cumulative_rewards.set_ylabel('Total Reward')
