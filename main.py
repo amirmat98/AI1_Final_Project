@@ -11,7 +11,10 @@ from Plotter import map_action_to_symbol
 # Function to set up the simulation with a predefined environment and agent
 def configure_simulation():
     # Seed the random number generator for reproducibility
-    np.random.seed(np.random.randint(0, 100))
+    # temp_seed = np.random.randint(0, 100)
+    # print("seed = ", temp_seed)
+    # np.random.seed(temp_seed)
+    np.random.seed(56)
 
     # Define parameters for the grid world and Q-learning agent
     params = {
@@ -37,6 +40,7 @@ def run_simulation(environment, agent, params):
     # Set up plotting
     figure, axes = plt.subplots(2, 3, figsize=(18, 12))
     axes_list = axes.flatten()
+    # ax1, ax2, ax3, ax4, ax5, ax6 = axes.flatten()
 
     # Clear any previous metrics
     rewards.clear()

@@ -85,15 +85,16 @@ def display_agent_policy_on_grid(q_values, axis):
     # Overlay action arrows on the grid
     for row_index, row in enumerate(optimal_actions):
         for col_index, action_code in enumerate(row):
-            action_arrow = action_values_mapping(action_code)
-            axis.text(col_index, row_index, action_arrow, horizontalalignment='center', verticalalignment='center', fontsize=12, color='black')
+            # action_arrow = action_values_mapping(action_code)
+            action_arrow = action_values_mapping[action_code]
+            axis.text(col_index, row_index, action_arrow, horizontalalignment='center', verticalalignment='center', fontsize = 10, color='black')
 
     # Set grid lines centered on each cell edge
     axis.set_xticks(np.arange(optimal_actions.shape[1]) - 0.5, minor=True)
     axis.set_yticks(np.arange(optimal_actions.shape[0]) - 0.5, minor=True)
     
     # Draw the grid lines
-    axis.grid(which='minor', color='black', style='-', linewidth=2)
+    axis.grid(which='minor', color='black', linestyle='-', linewidth=2)
     
     # Remove tick marks
     axis.tick_params(axis='both', which='both', length=0)
@@ -102,14 +103,13 @@ def display_agent_policy_on_grid(q_values, axis):
     axis.set_title('Optimal Policy Visualization\n')
 
 
-
 # Function to update visualization plots after training episodes
-def refresh_visualization(episode_number, agent, axis_qvalues, axis_policy, axis_path, axis_steps, axis_rewards, axis_cumulative_rewards, environment, path_of_episode):
+def refresh_visualization(episode_number, agent, axis_steps, axis_rewards, axis_cumulative_rewards, axis_policy, axis_qvalues, axis_path, environment, path_of_episode):
     global rewards, steps_episode  # Referencing global variables
     final_episode = agent.number_episodes - 1  # Check if it's the last episode
     if episode_number == final_episode:  # Update plots only after the last training episode
-        render_qvalue_heatmap(agent.q_table, axis_qvalues)
-        display_agent_policy_on_grid(agent.q_table, axis_policy)
+        render_qvalue_heatmap(agent.qtable, axis_qvalues)
+        display_agent_policy_on_grid(agent.qtable, axis_policy)
         axis_policy.set_title(r'$\bf{Visualization\ of\ Policy\ Grades}$', fontsize=14)
         axis_qvalues.set_title(r'$\bf{Heatmap\ of\ Q-values}$', fontsize=14)
         axis_path.set_title(r'$\bf{Path\ Taken\ by\ Agent}$', fontsize=14)
@@ -137,4 +137,4 @@ def refresh_visualization(episode_number, agent, axis_qvalues, axis_policy, axis
         draw_agent_route(environment.grid_size, path_of_episode, axis_path)
 
         # Adjust the spacing between plot rows and columns
-        plt.subplots_adjust(horizontal_space=0.3, vertical_space=0.4)
+        plt.subplots_adjust(hspace=0.4, wspace=0.3)
