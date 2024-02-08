@@ -94,10 +94,21 @@ def run_simulation(environment, agent, params):
     print("Training has been completed.")
 
     # Extract and display the optimal policy derived from Q-values
-    optimal_policy = np.zeros_like(environment.grid, dtype = int)
+    optimal_policy = make_optimal_policy(environment, grid_layouts, agent)
     display_policy(optimal_policy)
     plt.show() # Display all the plots
 
+# Function to make the optimal policy
+def make_optimal_policy(env, grid_layouts, agent):
+    optimal_policy = np.zeros_like(env.grid, dtype = int)
+    for i in range(optimal_policy.shape[0]):
+        for j in range(optimal_policy.shape[1]):
+            if grid_layouts[-1][i, j] != -1:
+                optimal_policy[i, j] = np.argmax(agent.qtable[i, j])
+    
+    return optimal_policy
+
+# 
 # Function to display the optimal policy in a human-readable format
 def display_policy(policy):
     print("\nOptimal Solution and Policy:")
