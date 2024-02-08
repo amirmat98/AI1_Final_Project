@@ -8,14 +8,6 @@ from Globals_Variables import rewards, steps_episode
 from Plotter import map_action_to_symbol
 
 
-import numpy as np
-import matplotlib.pyplot as plt
-from GridWorldEnvironment import GridWorld
-from Agent import Agent
-from Visualization import plot_statistics, plot_agent_path
-from Metrics import episode_rewards, episode_steps
-from Visualization import action_to_direction
-
 # Function to set up the simulation with a predefined environment and agent
 def configure_simulation():
     # Seed the random number generator for reproducibility
@@ -92,24 +84,27 @@ def run_simulation(environment, agent, params):
         refresh_visualization(episode_num, agent, axes_list[0], axes_list[1], axes_list[2], axes_list[3], axes_list[4], axes_list[5], environment, episode_path)
 
         # Visualize the agent's trajectory path
-        draw_agent_route(params['grid_size'], episode_path, axes_list[5])
+        draw_agent_route(params['g'], episode_path, axes_list[5])
 
     # Simulation is complete
     print("Training has been completed.")
 
     # Extract and display the optimal policy derived from Q-values
-    optimal_policy = agent.derive_policy()
+    optimal_policy = np.zeros_like(environment.grid, dtype = int)
     display_policy(optimal_policy)
-
     plt.show() # Display all the plots
 
 # Function to display the optimal policy in a human-readable format
 def display_policy(policy):
     print("\nOptimal Solution and Policy:")
     # Iterate through all states in the policy
-    for position, move in np.ndenumerate(policy):
-        if move != -1: # Check if the move is valid (not an obstacle)
-            print(f"State {position}: {action_to_direction(move)}") # Print the action for each state
+    for i in range(policy.shape[0]):
+        for j in range(policy.shape[1]):
+            action = policy[i, j]
+            print(f"State ({i}, {j}): Move {map_action_to_symbol(action)}")
+
+    print("\nOptimal Policy:")
+    print(policy)
 
 # Main entry point for the script
 def main():
