@@ -106,7 +106,7 @@ def display_agent_policy_on_grid(q_values, axis):
 # Function to update visualization plots after training episodes
 def refresh_visualization(episode_number, agent, axis_qvalues, axis_policy, axis_path, axis_steps, axis_rewards, axis_cumulative_rewards, environment, path_of_episode):
     global rewards, steps_episode  # Referencing global variables
-    final_episode = agent.rewards - 1  # Check if it's the last episode
+    final_episode = agent.number_episodes - 1  # Check if it's the last episode
     if episode_number == final_episode:  # Update plots only after the last training episode
         render_qvalue_heatmap(agent.q_table, axis_qvalues)
         display_agent_policy_on_grid(agent.q_table, axis_policy)

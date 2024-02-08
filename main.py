@@ -62,7 +62,7 @@ def run_simulation(environment, agent, params):
 
             current_state = next_state # Move to the next state
             total_reward += reward # Accumulate rewards
-            episode_qvalues.append(np.copy(agent.q_table[current_state]))
+            episode_qvalues.append(np.copy(agent.qtable[current_state]))
             agent.path_episode.append(current_state) # Record the new state
 
         # Record episode metrics
@@ -80,11 +80,11 @@ def run_simulation(environment, agent, params):
         grid_layouts.append(grid_layout)
 
         # Update episode_path
-        episode_path = agent.episode_path              
+        episode_path = agent.path_episode              
         refresh_visualization(episode_num, agent, axes_list[0], axes_list[1], axes_list[2], axes_list[3], axes_list[4], axes_list[5], environment, episode_path)
 
         # Visualize the agent's trajectory path
-        draw_agent_route(params['g'], episode_path, axes_list[5])
+        draw_agent_route(params['grid_size'], episode_path, axes_list[5])
 
     # Simulation is complete
     print("Training has been completed.")

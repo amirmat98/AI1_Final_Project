@@ -14,7 +14,7 @@ class JumpyGW:
 
         for i in range(number_obstacles):
             obs_pos = ( np.random.randint(size), np.random.randint(size))
-            self.obstacles.apend(obs_pos)
+            self.obstacles.add(obs_pos)
 
 
     # Reset the environemtn from scrach
